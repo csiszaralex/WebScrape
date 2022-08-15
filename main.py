@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 import time
 
 def get_driver():
@@ -11,7 +12,7 @@ def get_driver():
   options.add_argument("disable-blink-features=AutomationControlled")
   
   driver = webdriver.Chrome(options=options)
-  driver.get("http://automated.pythonanywhere.com/")
+  driver.get("http://automated.pythonanywhere.com/login")
   return driver
 
 def clean_text(text):
@@ -21,8 +22,12 @@ def clean_text(text):
 
 def main():
   driver = get_driver()
+  driver.find_element("id","id_username").send_keys("automated")
   time.sleep(2)
-  element = driver.find_element("xpath","/html/body/div[1]/div/h1[2]")
-  return clean_text(element.text)
+  driver.find_element("id", "id_password").send_keys("automatedautomated" + Keys.RETURN)
+  time.sleep(2)
+  driver.find_element("xpath", "/html/body/nav/div/a").click()
+  return 
+  
 
 print(main())
