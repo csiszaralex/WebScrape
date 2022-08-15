@@ -1,4 +1,5 @@
 from selenium import webdriver
+import time
 
 def get_driver():
   options = webdriver.ChromeOptions()
@@ -13,10 +14,15 @@ def get_driver():
   driver.get("http://automated.pythonanywhere.com/")
   return driver
 
+def clean_text(text):
+  """Extract only the temp from text"""
+  out = float(text.split(": ")[1])
+  return out
 
 def main():
   driver = get_driver()
-  element = driver.find_element("xpath","/html/body/div[1]/div/h1[1]")
-  return element
+  time.sleep(2)
+  element = driver.find_element("xpath","/html/body/div[1]/div/h1[2]")
+  return clean_text(element.text)
 
 print(main())
